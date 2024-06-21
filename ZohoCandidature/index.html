@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <title>Form Integration with Zoho CRM</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .form-group button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="form-container">
+    <form id="zohoForm">
+
+      <div class="form-group">
+        <label for="Last_Name">Prenom et nom</label>
+        <input type="text" id="Last_Name" name="Last_name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="Email" name="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="tel" id="Phone" name="Phone" required>
+      </div>
+      <div class="form-group">
+        <label for="Postal_Code">Postal_Code</label>
+        <input type="text" id="Postal_Code" name="Postal_Code" required>
+      </div>
+      <div class="form-group">
+        <label for="French">Language</label>
+        <input type="checkbox" name="French" id="French">
+        <input type="checkbox" name="English" id="English">
+      </div>
+      <div class="form-group">
+        <label for="Educational_Institution">Educational Institution</label>
+        <input type="text" id="Educational_Institution" name="Educational_Institution" required>
+      </div>
+      <div class="form-group">
+        <label for="Study_Program">Study_Program</label>
+        <input type="text" id="Study_Program" name="Study_Program" required>
+      </div>
+      <div class="form-group">
+        <label for="Time_Remaining ">Time_Remaining</label>
+        <input type="text" id="Time_Remaining" name="Time_Remaining" required>
+      </div>
+      <div class="form-group">
+        <label for="Skills ">Skills</label>
+        <textarea id="Skills" name="Skills" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="Company_Institution">Company_Institution</label>
+        <input type="text" id="Company_Institution" name="Company_Institution" required>
+      </div>
+      <div class="form-group">
+        <label for="Position">Position</label>
+        <input type="text" id="Position" name="Position" required>
+      </div>
+      <div class="form-group">
+        <label for="Experience_description">Experience_description</label>
+        <input type="text" id="Experience_description" name="Experience_description" required>
+      </div>
+       <div class="form-group">
+        <label for="Reference_Name">Reference_Name </label>
+        <input type="text" id="Reference_Name" name="Reference_Name ">
+      </div>
+      <div class="form-group">
+        <label for="Reference_Phone_Number">Reference_Phone_Number</label>
+        <input type="text" id="Reference_Phone_Number" name="Reference_Phone_Number">
+      </div>
+      <div class="form-group">
+        <label for="Linkedin">Linkedin</label>
+        <input type="text" id="Linkedin" name="Linkedin" required>
+      </div>
+      <!-- <div class="form-group">
+        <label for="test">testCV</label>
+        <input type="file" name="test" id="test">
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="CV">CV</label>
+        <input type="file" id="CV" name="CV" required>
+      </div> -->
+      <!-- <div class="form-group">
+        <label for="Reference_Name ">Reference_Name </label>
+        <input type="text" id="Reference_Name " name="Reference_Name " required>
+      </div>
+      <div class="form-group">
+        <label for="Reference_Phone_Number">Reference_Phone_Number</label>
+        <input type="text" id="Reference_Phone_Number" name="Reference_Phone_Number" required>
+      </div> -->
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+
+    document.getElementById('zohoForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const Last_Name = document.getElementById('Last_Name').value;
+      const Email = document.getElementById('Email').value;
+      const Phone = document.getElementById('Phone').value;
+      const Postal_Code = document.getElementById('Postal_Code').value;
+      const French = document.getElementById('French').checked;
+      const English = document.getElementById('English').checked;
+      const Educational_Institution = document.getElementById('Educational_Institution').value;
+      const Study_Program = document.getElementById('Study_Program').value;
+      const Time_Remaining = document.getElementById('Time_Remaining').value;
+      const Skills = document.getElementById('Skills').value;
+      const Company_Institution = document.getElementById('Company_Institution').value;
+      const Position = document.getElementById('Position').value;
+      const  Experience_description = document.getElementById('Experience_description').value;
+      const Linkedin = document.getElementById('Linkedin').value;
+
+
+      // const test = document.getElementById('test').files[0];
+     
+
+
+      const Reference_Name = document.getElementById('Reference_Name').value;
+      const Reference_Phone_Number = document.getElementById('Reference_Phone_Number').value;
+
+
+      try {
+        const response = await fetch('http://localhost:3002/api/form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            Last_Name,
+            Email,
+            Phone,
+            Postal_Code,
+            French,
+            English,
+            Educational_Institution,
+            Study_Program,
+            Time_Remaining,
+            Skills,
+            Company_Institution,
+            Position,
+            Linkedin,
+            Experience_description,
+            Reference_Name,
+            Reference_Phone_Number
+
+          })
+
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Form submitted successfully', data);
+
+          alert('Form submitted successfully!');
+        } else {
+          const errorData = await response.json();
+          console.error('Error submitting form', errorData);
+          alert('Error submitting form: ' + errorData.error);
+        }
+      } catch (error) {
+        console.error('Error submitting form', error);
+        alert('Error submitting form: ' + error.message);
+      }
+
+
+     
+    });
+
+
+    
+  </script>
+
+
+
+</body>
+
+</html>
