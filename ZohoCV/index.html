@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CV</title>
+</head>
+<body>
+    <h2>Upload CV (PDF only)</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" name="cvFile" id="cvFile" accept=".pdf" required>
+        <button type="submit">Upload CV</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('cvFile', document.getElementById('cvFile').files[0]);
+
+            try {
+                const response = await fetch('http://localhost:3002/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                // // const result = await response.json();
+                // console.log('CV upload response:', result);
+            } catch (error) {
+                console.error('Error uploading CV:', error);
+            }
+        });
+    </script>
+</body>
+</html>
